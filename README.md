@@ -1,71 +1,33 @@
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/signaloid/Signaloid-Demo-General-C#gh-dark-mode-only)
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-v6.png#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/signaloid/Signaloid-Demo-General-C#gh-light-mode-only)
+[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/mfahadm8/Signaloid-Demo-AutonomousVehicle-SafeBrakingSystem#gh-dark-mode-only)
+[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-v6.png#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/mfahadm8/Signaloid-Demo-AutonomousVehicle-SafeBrakingSystem#gh-light-mode-only)
 
-# C Project Template for the Signaloid Cloud Developer Platform
-This is a minimal example to get you started with setting up C repositories in GitHub that you can then run on the Signaloid Cloud Developer Platform. The repository contains a C source file in the `src` folder which gets compiled and executed by the Signaloid Cloud Developer Platform.
-
-## Getting Started
-1. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repository.
-2. Edit `README.md` to [adapt the “Add to signaloid.io” button's URL](#option-1--using-the-add-to-signaloidio-button).
-3. Edit the code and [configure the build](#configuring-the-build-configmk).
-
-## Repository Structure
-The Signaloid Cloud Developer Platform expects any GitHub repository you wish to run to have a `src` folder containing your source code. By default, the Signaloid Cloud Developer Platform will compile all C and C++ source files (extensions `*.c`, `*.cc`, `*.cpp`, `*.c++`, `*.cp`, and `*.cxx`) in the `src` folder and will link them into a single binary and run that on your choice of uncertainty-tracking processor.
-
-### Configuring the Build (`config.mk`)
-You can modify the default build behavior described above by providing a file named `config.mk`.
-
-For C repositories, there are two relevant variables in `config.mk`:
-- `SOURCES`, a list of C source files to compile;
-- `CFLAGS`, the options that are passed to the C compiler.
-
-If the `SOURCES` variable is not set, the Signaloid Cloud Developer Platform compiles all the C and C++ files in the `src` folder.
+# Development of Safe Braking System for Autonomous Vehicles Using Bayesian Inference
+The project is a simplified simulation of a braking system for an autonomous vehicle. It uses a Bayesian approach to estimate the safe distance. It models the stopping distance as a random variable with a prior probability distribution and updates this distribution based on the observed evidence (i.e., the measured distance) using the Bayes' theorem. This approach accounts for the uncertainty and variability in the stopping distance and provides a more accurate estimate of the safe distance. The inspiration was taken from signaloid uncertainty official blogs and libUncertain documentations.
 
 
-#### 🎓 Example
-The following example shows a `src/` folder for a repository, containing one C source file (`main.c`) and a `config.mk` to modify the build parameters.
-```
-src/
-├── config.mk
-└── main.c
-```
+## Inputs:
+- `Speed` of the vehicle (in meters per second)
+- `Mass` of the vehicle
+- `Co-efficient offriction` between tires and road
+- `Reaction time` of the driver (in seconds)
+- `Prior distribution of the distance` to the obstacle (in meters)
+- `Measurement noise` of the sensor (standard deviation in meters)
 
-In this repository, the file [`src/config.mk`](./src/config.mk) contains
-```makefile
-SOURCES = main.c
-CFLAGS  = -DDEBUG
-```
-This tells the Signaloid Cloud Developer Platform to build the [`main.c`](./src/main.c) file using the compiler flag `-DDEBUG` (i.e., defining the symbol `DEBUG`).
+## Assumptions:
 
-### Headers
-Place your header files in the `src` folder. This folder is part of the build include path.
+- The braking system can be modeled as a simple equation that relates the safe distance required to apply the brakes with the speed of the vehicle, the reaction time of the driver, and the distance to the obstacle.
+- The braking system requires a safety buffer of 2 meters.
+- The reaction time of the driver is assumed to be uniformly distributed between 0.5 and 1.5 seconds.
+- The prior distribution of the distance to the obstacle is assumed to be uniformly distributed between 0 and 80 meters.
+- The measurement noise of the sensor is assumed to be normally distributed with a standard deviation of 2 meters.
+- The evidence of the distance to the obstacle is assumed to be fixed at 70 meters.
+- The vehicle mass and friction force are assumed to be constant and not included in the current version of the code.
+- It's important to note that these assumptions and inputs may not be representative of a real-world autonomous vehicle braking system and should be carefully evaluated and tested before being used in any practical application.
 
-### Libraries
-During the build process, the Signaloid Cloud Developer Platform links the compiled object files against the following libraries:
-- `libc`: the C standard library;
-- `libm`: the C math library (with function prototypes and other definitions in `math.h`);
-- `libUncertain`: a library that exposes functionalities of uncertainty-tracking computer architectures (with function prototypes and other definitions in `uncertain.h`).
 
-`libUncertain` allows applications to access and inject uncertainty information into the underlying microarchitectures. You can find out more about `libUncertain` in the [libUncertain documentation](https://libuncertain.signaloid.io/).
+## Output:
+Vehicle can safely apply brakes at a distance of 102.173755 meters.
+[<img src="./image.png" alt="Distribution Support Outpu Chart ">]
 
-## 🍰 Accessing Your GitHub Repository from the Signaloid Cloud Developer Platform
-There are two ways to access a GitHub repository from the Signaloid Cloud Developer Platform.
 
-### Option 1:  Using the “Add to signaloid.io” Button
-This first option makes it easiest for you (and other GitHub users) to run your repository on the Signaloid Cloud Developer Platform. Edit the snippet at the top of this `README.md` to include the URL of your Git repository.
 
-The text you need to change is (replacing the text `<your repository URL here>`):
-```html
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.svg#gh-dark-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=<your repository URL here>#gh-dark-mode-only)
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-v6.svg#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=<your repository URL here>#gh-light-mode-only)
-```
-
-Next, go to the repository's Github page and click on the “Add to signaloid.io” button.
-
-### Option 2: Manually Adding Repositories to the Signaloid Cloud Developer Platform
-A second option is to manually add a repository to the Signaloid Cloud Developer Platform. To do so, follow these steps:
-1. Log in to the Signaloid Cloud Developer Platform at [https://signaloid.io/](https://signaloid.io/). If you do not already have an account, you can create one for free in just three clicks.
-2. Click on the `Repositories` tab in the menu on the left side of the screen (you might need to go through the menu icon on mobile screens).
-3. Give the Signaloid Cloud Developer Platform permission to access your repositories, using the blue GitHub "Login" button.
-4. Click on the green button (Connect to Repositories). All your repositories will appear in a list. Add the relevant repository.
-5. Your repository should now appear in the UI.
