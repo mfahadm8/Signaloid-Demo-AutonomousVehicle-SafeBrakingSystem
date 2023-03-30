@@ -8,8 +8,8 @@ The project is a simplified simulation of a braking system for an autonomous veh
 ## Inputs:
 - `Speed` of the vehicle (in meters per second)
 - `Mass` of the vehicle
-- `Co-efficient offriction` between tires and road
-- `Reaction time` of the driver (in seconds)
+- `Co-efficient of friction` between tires and road
+- `Reaction time` of the system (in seconds)
 - `Prior distribution of the distance` to the obstacle (in meters)
 - `Measurement noise` of the sensor (standard deviation in meters)
 
